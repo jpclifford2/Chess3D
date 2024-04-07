@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    
+<!-- CS559 Workbook Pages - page content &copy; 2021, Michael Gleicher -->
+<!-- This page is part of a Workbook developed for the 
+    CS559 Computer Graphics Class at the University of Wisconsin
+    https://graphics.cs.wisc.edu/Courses/559-sp2021/ -->
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../../css/workbook.css">
+        <script src="../../js/resizeIFrames.js"></script>
+    </head>
+    <body>
+        <div class="container container--outer"><div class="maincolumn">
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header"><h1 class="post__title">Page 8: Exercise 2: Graphics Park</h1>
+		</header>
+        
+        
+        
+		<div class="content post__content clearfix"><p>Over the next few weeks, we&rsquo;ll build Graphics Town. But to start, we&rsquo;ll begin with something less ambitious: a park. We&rsquo;ll add some &ldquo;rides&rdquo; to the park to make it more like an Amusement Park than just a playground.</p>
+<p>You can see the beginnings of a park below (
+    <a href="../../for_students/07-08-01.html" class="for_students">07-08-01.html</a>). The code is located in three files:</p>
+<ul>
+<li>
+    <a href="../../for_students/07-08-01.js" class="for_students">07-08-01.js</a> makes the park: it makes the world and places the playground equipment into it;</li>
+<li>
+    <a href="../../for_students/07-08-simplepark.js" class="for_students">07-08-simplepark.js</a> defines a simple example of an animated object;</li>
+<li>
+    <a href="../../for_students/07-08-parkobjects.js" class="for_students">07-08-parkobjects.js</a> defines the more complex animated objects.</li>
+</ul>
+<p>You should look over all the files, you&rsquo;ll have to change both 
+    <a href="../../for_students/07-08-01.js" class="for_students">07-08-01.js</a> and 
+    <a href="../../for_students/07-08-parkobjects.js" class="for_students">07-08-parkobjects.js</a>.</p>
+<p>Here are the required things to do. We recommend doing them in order to learn how the code works:</p>
+<ol>
+<li>
+<p>Look at the simplest example (the bouncing cube) in 
+    <a href="../../for_students/07-08-simplepark.js" class="for_students">07-08-simplepark.js</a>, make sure you understand it, and then <strong>take it out</strong> of the main setup in 
+    <a href="../../for_students/07-08-01.js" class="for_students">07-08-01.js</a> since it is distracting and really has no place in a park.</p>
+</li>
+<li>
+<p>The file 
+    <a href="../../for_students/07-08-parkobjects.js" class="for_students">07-08-parkobjects.js</a> has a bunch of playground toys defined in it. Some of these are already placed in the world. Make sure you understand these examples as well. Also, you should place some new ones in the world.</p>
+<p>Right now, there are two &ldquo;roundabouts&rdquo; (a playground toy that spins around - sometimes these are called &ldquo;orbiters&rdquo; or &ldquo;spinners&rdquo; or &ldquo;spinning wheel&rdquo; - see <a href="https://en.wikipedia.org/wiki/Roundabout_%28play%29" target="_blank">Roundabout</a>). There is a simple one and a fancy one. These are good examples to understand.</p>
+<p>The same file also defines some other objects (a swing and a carousel). <strong>Place at least one more swing set and one carousel in the park.</strong> This will give you a chance to see how we place objects in the world using the framework. Note that this does <em>not require</em> you to change the objects (class definitions), but it does require you to edit the world setup function.</p>
+<p>When you add objects, you will need to make sure that appropriate <code>import</code> statements are included in the 
+    <a href="../../for_students/07-08-01.js" class="for_students">07-08-01.js</a> file. You should also make sure that you position the different playground toys so they have some space between them.</p>
+</li>
+<li>
+<p>We have started to make a &ldquo;Carousel&rdquo; or &ldquo;Merry-go-Round.&rdquo; While the Wikipedia page says these can be like the &ldquo;roundabout&rdquo; above, what we really intended was an amusement park &ldquo;merry go round&rdquo; where horses (or other things you sit on) go up and down while the ride spins. There was a famous one at <a href="https://isthmus.com/news/news/epic-buys-carousel-from-ellas-deli/" target="_blank">Ella&#39;s Deli</a> on the east side, until it closed. We&rsquo;d like you to expand the spinning thing we started to be more like one of these. You need to place <strong>&ldquo;horses&rdquo;</strong> on the poles. You can use simple geometry for the horses (a cube or other primitive), but there needs to be <strong>one on each pole</strong>, and it needs to <strong>go up and down</strong> as the merry-go-round spins. Note: the pole can go right through the object. This will require you to edit the constructor and <code>stepWorld</code> function for the <code>Carousel</code> class.</p>
+</li>
+<li>
+<p>Make your own object and put it into the scene. Preferably something that is appropriate for a park. It can be simple, but we want to see that you can create a new class of object that moves. Maybe a bird flying in the sky, or a tree that waves in the wind, or a child riding a bicycle on a path.</p>
+</li>
+</ol>
+<p>These are the three simple changes (remove the bouncing cube, add another swing, and animate the merry-go-round) and one less-simple change (new object type). But in the process, you&rsquo;ll get to see the framework code and get some practice making and animating a hierarchical object using THREE.JS (and our framework).</p>
+<p>For advanced points, you can do better than the minimums. Note that each of these can only get you a few points - doing the basic stuff is far more important.</p>
+<ol>
+<li>
+<p>Make the merry-go-round have nice geometry (like horses and other animals, or something else). You can add more poles if you need to.</p>
+</li>
+<li>
+<p>Make more amusement park rides that have hierarchical motion. Things like tilt-a-whirls, spinning teacups, or (well, I don&rsquo;t know the names for these things). See the &ldquo;flat rides&rdquo; on <a href="https://www.tripsavvy.com/types-of-theme-park-attractions-4110823" target="_blank">Trip Savvy</a> for names, or a Google image search for &ldquo;spinning amusement park ride&rdquo; turns up lots of things. It is more important that the rides have hierarchical motion than they have detailed geometry. Your ride must be animated and have hierarchical motion.</p>
+<p>This extra ride is in addition to what you had to make for the basic points (the object that you made for 4 above cannot count for both basic and advanced points). You may make up to two rides.</p>
+</li>
+</ol>
+<p>Everything you do for this exercise should be in the files 
+    <a href="../../for_students/07-08-01.js" class="for_students">07-08-01.js</a> and 
+    <a href="../../for_students/07-08-parkobjects.js" class="for_students">07-08-parkobjects.js</a>. Make sure that they show up properly in the view below on the page!</p>
+<p>As with the quadcopter exercise, you may add object files subject to the same rules: Explain where they come from in the text file below, use legal ones, avoid huge ones, avoid features not discussed in class yet.</p>
+<p>Please see the framework code ground rules on <a href="../../docs/7/">Page &nbsp;7&nbsp; (The CS559 Framework Code (GraphicsTown))</a>.</p>
+<p>The park (
+    <a href="../../for_students/07-08-01.html" class="for_students">07-08-01.html</a>):</p>
+<iframe
+    title="07-08-01"
+    src="../../for_students/07-08-01.html"
+    class="includebox includebox-standard"
+    width="100%"
+    height="100%"
+    scrolling="no"
+    frameborder="0"
+></iframe>
+
+<p>You must list the features you have implemented in the text file 
+    <a href="../../for_students/07-workbook.txt" class="for_students">07-workbook.txt</a>.</p>
+<p>After you do this exercise, go on to <a href="../../docs/9/">Page &nbsp;9&nbsp; (Exercise 3: Construction Site)</a>.</p>
+
+            
+
+
+        
+        
+        
+        
+        
+        
+        
+        <div class="page-rubric-container">
+    <details class="page__rubric">
+    <summary>Page 8 Rubric (16 points total)</summary>
+    <br/>
+    <div class="page-rubric-grid">
+            <div class="page-rubric-grid-header rubric-box-regular">Points (12):</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-08-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">1 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">take out bouncing cube</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-08-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">1 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">place at least 1 more swing</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-08-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">1 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">place carousel</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-08-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">3 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">carousel has poles and &#39;&#39;horses&#39;&#39;</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-08-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">3 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">carousel has correct motion (spins, horses go up and down)</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-08-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">3 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">another moving object</div>
+            <div class="page-rubric-grid-header rubric-box-bonus">Advanced points (4) 
+                :</div><div class="page-rubric-grid-box rubric-box-bonus">Box 07-08-01</div>
+                <div class="page-rubric-grid-points rubric-box-bonus">2 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-bonus">more theme park rides (with hierarchical motion</div><div class="page-rubric-grid-box rubric-box-bonus">Box 07-08-01</div>
+                <div class="page-rubric-grid-points rubric-box-bonus">2 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-bonus">more theme park rides (with hierarchical motion</div></div>
+    </details>
+    </div>
+			
+			
+		</div>
+	</article>
+</main>
+
+                </div>
+                <div class="sidebar">
+<h2 class="Side_Title">Workbook 7: Transformation and Hierarchy in Three.js</h2>
+<p class="Side__Note">Pages:</p>
+<ul class="Side__List">
+    <li class="Side__Item Side__Unselected"><a href="../../">Index (Transformation and Hierarchy in THREE.JS)</a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/1/">1: Rotations in 3D </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/2/">2: Euler Angles Toys </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/3/">3: Axis Angle Representations </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/4/">4: Quaternions </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/5/">5: Hierarchical Modeling in THREE </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/6/">6: Exercise 1: Quadcopter / Multi-Rotor </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/7/">7: The CS559 Framework Code (GraphicsTown) </a></li>
+        <li class="Side__Item Side__Selected"> 8: Exercise 2: Graphics Park </li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/9/">9: Exercise 3: Construction Site </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/10/">10: Hand-in and Gallery </a></li>
+</ul>
+</div>
+</div>
+    </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    
+<!-- CS559 Workbook Pages - page content &copy; 2021, Michael Gleicher -->
+<!-- This page is part of a Workbook developed for the 
+    CS559 Computer Graphics Class at the University of Wisconsin
+    https://graphics.cs.wisc.edu/Courses/559-sp2021/ -->
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../../css/workbook.css">
+        <script src="../../js/resizeIFrames.js"></script>
+    </head>
+    <body>
+        <div class="container container--outer"><div class="maincolumn">
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header"><h1 class="post__title">Page 9: Exercise 3: Construction Site</h1>
+		</header>
+        
+        
+        
+		<div class="content post__content clearfix"><p>Over the next few weeks, we&rsquo;ll build up Graphics Town. So, to start with, we&rsquo;ll need to get some construction equipment to start building.</p>
+<p>In terms of real learning goals, construction equipment is often great examples of articulated objects - they consist of pieces that rotate or translate relative to each other. Things like dump trucks, excavators, cranes, cement mixers, pile drivers, etc. Also, this will let you try out more of the framework code, in particular the automatic creation of UIs for object parameters.</p>
+<p>If you&rsquo;re curious, this is a simplified version of the <a href="https://graphics.cs.wisc.edu/Courses/559-f2008/posts/assignments-constructionsite/" target="_blank">2008 Construction Site</a>, when they were building WID and Union South. The <a href="https://graphics.cs.wisc.edu/Courses/559-f2008/posts/assignments-excavator/" target="_blank">2008 Excavator</a> was a bit nicer than the one given in the sample here. Now, we see similar machines building the new Computer Sciences building, so the assignment is timely again.</p>
+<p>We&rsquo;ve started out with two examples: a tower crane and an excavator. If you look at the construction site at the bottom of the page you can see we&rsquo;ve given two example machines. For both, the AutoUI creates sliders to control them. Notice how each machine has parameters (and therefore sliders) for position and orientation, but also for its articulations.</p>
+<p>The code is in 
+    <a href="../../for_students/07-09-01.js" class="for_students">07-09-01.js</a> (
+    <a href="../../for_students/07-09-01.html" class="for_students">07-09-01.html</a>).</p>
+<p>You need to create some more machine types. Here is a list of ideas to help you get started:</p>
+<ul>
+<li>Tower Crane</li>
+<li>Truck Crane</li>
+<li>Telescoping Truck Crane</li>
+<li>Excavator (see <a href="https://graphics.cs.wisc.edu/Courses/559-f2008/posts/assignments-excavator/" target="_blank">2008 Excavator</a>)</li>
+<li>Mini-Loader</li>
+<li>Fork-Lift</li>
+<li>Fork-Lift Crane</li>
+<li>Bulldozer</li>
+<li>Front-End Loader</li>
+<li>Dump Truck</li>
+<li>Cement Mixer</li>
+<li>Back-hoe</li>
+<li>Garbage Truck</li>
+<li>Concrete Pumper (<a href="http://www.potratzsouth.com/" target="_blank">Potratz</a> or <a href="http://gordysconcretepumping.com/" target="_blank">Gordy&#39;s</a>)</li>
+<li><a href="https://en.wikipedia.org/wiki/Pile_driver" target="_blank">Pile Driver</a></li>
+</ul>
+<p>There are examples of a crane and an excavator in 
+    <a href="../../for_students/07-09-constructionobjects.js" class="for_students">07-09-constructionobjects.js</a>. Both have multiple degrees of freedom (2 for the crane, 4 for the excavator - we don&rsquo;t count the overall position and orientation).</p>
+<p>The requirement is that you must create <strong>two</strong> new types of construction equipment and place them into the world. Each machine needs to have <strong>at least 1 degree of freedom beyond its position and orientation</strong> in the world. So, for example, you could make a dump truck and a fork-lift (each one degree of freedom). You can get advanced points for more degrees of freedom.</p>
+<p>The two machines should be different: don&rsquo;t make two variants of a dump truck. If you make another tower crane or excavator, they should be sufficiently different from the ones we&rsquo;ve given you.</p>
+<p>You can make the machines with rough geometry - build them out of boxes and cylinders. Or you can try to make nicer shapes. The most important thing is their behaviors: that you can control their articulations. The machines should be &ldquo;good enough&rdquo; that someone can tell what they are (give them a descriptive name too). You can get advanced points for nicer shapes. We will also give you a point for using colors/materials appropriately (the machines shouldn&rsquo;t be all the same color).</p>
+<p>Remember: the key here is to make things that are articulated. There should be multiple (rigid) pieces that translate and rotate relative to each other (controlled by parameters that can be connected to the sliders).</p>
+<p>You will need to create new classes of objects for your new machine types. You can refer to the examples we have provided.</p>
+<p>Note that in this exercise, you will be using the <code>update</code> method of the objects you define so they can be controlled by sliders. You will also have to define the parameters in the constructor, and include the call for <code>AutoUI</code> in the world setup function.</p>
+<p>Please see the framework code ground rules on <a href="../../docs/7/">Page &nbsp;7&nbsp; (The CS559 Framework Code (GraphicsTown))</a>. The example class <code>HingeCube</code> in <a href="../../libs/CS559-Framework/TestObjects.js">TestObjects.js</a> can give you a simple example of an articulation to start with. A hint: the <code>HingeCube</code> is the beginnings of a dump truck.</p>
+<p>As on previous pages, you can load geometry, subject to the same rules.</p>
+<p>You can earn advanced points for making an additional machine, for making nicer shapes, for using colors/materials well, and for having more than the minimum degrees of freedom. And possibly for doing something cool that we didn&rsquo;t think of.</p>
+<iframe
+    title="07-09-01"
+    src="../../for_students/07-09-01.html"
+    class="includebox includebox-standard"
+    width="100%"
+    height="100%"
+    scrolling="no"
+    frameborder="0"
+></iframe>
+
+<p>You must list the features you have implemented in the text file 
+    <a href="../../for_students/07-workbook.txt" class="for_students">07-workbook.txt</a>.</p>
+<h2 id="the-end">The end!</h2>
+<p>That&rsquo;s the end of workbook 7. Don&rsquo;t forget to save, commit, push, and fill in the Canvas hand-in Assignment when you are done!</p>
+
+            
+
+
+        
+        
+        
+        
+        
+        
+        
+        <div class="page-rubric-container">
+    <details class="page__rubric">
+    <summary>Page 9 Rubric (21 points total)</summary>
+    <br/>
+    <div class="page-rubric-grid">
+            <div class="page-rubric-grid-header rubric-box-regular">Points (16):</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-09-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">3 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">equipment 1 is identifiable (can tell what it is)</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-09-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">3 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">equipment 2 is identifiable</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-09-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">3 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">equipment 1 has correct articulation</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-09-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">3 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">equipment 2 has correct articulation</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-09-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">3 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">UI works for 1&amp;2</div><div class="page-rubric-grid-box rubric-box-regular">Box 07-09-01</div>
+                <div class="page-rubric-grid-points rubric-box-regular">1 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-regular">good use of colors/materials for all equipment (not just one color)</div>
+            <div class="page-rubric-grid-header rubric-box-bonus">Advanced points (5) 
+                :</div><div class="page-rubric-grid-box rubric-box-bonus">Box 07-09-01</div>
+                <div class="page-rubric-grid-points rubric-box-bonus">3 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-bonus">third machine identifyable with working articulation</div><div class="page-rubric-grid-box rubric-box-bonus">Box 07-09-01</div>
+                <div class="page-rubric-grid-points rubric-box-bonus">2 pt</div>
+                <div class="page-rubric-grid-desc rubric-box-bonus">at least one object has 4&#43; d.o.f. (beyond position/orientation)</div></div>
+    </details>
+    </div>
+			
+			
+		</div>
+	</article>
+</main>
+
+                </div>
+                <div class="sidebar">
+<h2 class="Side_Title">Workbook 7: Transformation and Hierarchy in Three.js</h2>
+<p class="Side__Note">Pages:</p>
+<ul class="Side__List">
+    <li class="Side__Item Side__Unselected"><a href="../../">Index (Transformation and Hierarchy in THREE.JS)</a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/1/">1: Rotations in 3D </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/2/">2: Euler Angles Toys </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/3/">3: Axis Angle Representations </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/4/">4: Quaternions </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/5/">5: Hierarchical Modeling in THREE </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/6/">6: Exercise 1: Quadcopter / Multi-Rotor </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/7/">7: The CS559 Framework Code (GraphicsTown) </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/8/">8: Exercise 2: Graphics Park </a></li>
+        <li class="Side__Item Side__Selected"> 9: Exercise 3: Construction Site </li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/10/">10: Hand-in and Gallery </a></li>
+</ul>
+</div>
+</div>
+    </body>
+</html>

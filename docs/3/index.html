@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    
+<!-- CS559 Workbook Pages - page content &copy; 2021, Michael Gleicher -->
+<!-- This page is part of a Workbook developed for the 
+    CS559 Computer Graphics Class at the University of Wisconsin
+    https://graphics.cs.wisc.edu/Courses/559-sp2021/ -->
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../../css/workbook.css">
+        <script src="../../js/resizeIFrames.js"></script>    
+    
+    
+    <script type="text">
+        (function() {
+            var i, text, code, codes = document.getElementsByTagName('code');
+            for (i = 0; i &lt; codes.length;) {
+                code = codes[i];
+                if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+                text = code.textContent;
+                if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+                    text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+                    code.textContent = text;
+                }
+                if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+                    /^\$(.|\s)+\$$/.test(text) ||
+                    /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+                    code.outerHTML = code.innerHTML;  // remove <code></code>
+                    continue;
+                }
+                }
+                i++;
+            }
+            })();
+    </script>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            TeX: { equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"] }
+            }
+        });
+    </script>
+
+    </head>
+    <body>
+        <div class="container container--outer"><div class="maincolumn">
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header"><h1 class="post__title">Page 3: Axis Angle Representations</h1>
+		</header>
+        
+        
+        
+		<div class="content post__content clearfix"><h2 id="axis-angle-representation">Axis Angle Representation</h2>
+<p>With Euler Angles, we built rotations by using the &ldquo;building block&rdquo; of rotations
+about coordinate axes. We rotate around the X, Y or Z axis.</p>
+<p>We can actually rotate about any axis. As we mentioned on page 1, we can represent any rotation
+as a single rotation about some axis. The only trick is that we need to specify the axis.
+(contrast this with Euler Angles that require 3 rotations, but around pre-determined axes).</p>
+<p>This leads to a different way to represent a rotation: we can provide the direction of the axis
+(a vector), and an amount to rotate around that axis. This is called <strong>axis angle</strong>.</p>
+<p>As an aside&hellip; both of these representations were invented by mathmetician Leonard Euler, and are
+consequences of his basic theorems about rotation.</p>
+<p>You can try it with this gadget.
+On the left, we have Euler Angles (which you should be used to by now).
+On the right, we have Axis Angle form - note how it has 4 numbers
+(3 for the vector of the axis, one for the amount of rotation around that axis).
+With the gadget, the axis of rotation is shown by the yellow cylinder.</p>
+<iframe
+    title="../EulerToys/eta-axis"
+    src="../../for_students/../EulerToys/eta-axis.html"
+    class="includebox includebox-standard"
+    width="100%"
+    height="100%"
+    scrolling="no"
+    frameborder="0"
+></iframe>
+<p>You can see that if you set the axis to be one of the coordinate axes
+(the default setup has the vector as 0,0,1 - or the Z axis), it is the
+same as a rotation about that axis. But try making the vector be something else.
+For example, set the axis to be 1,1,1 (so the cylinder is pointing &ldquo;diagonally&rdquo;)
+and note how the object rotates around this axis.</p>
+<p>With axis-angle form, we ignore the magnitude of the vector - we just use its direction.
+Things break if the vector has zero length.</p>
+<p>Axis angle form is useful if the object naturally has some axis to rotate around.
+If you want to make a particular rotation, it can be difficult to figure out what the
+right axis is.</p>
+<p>The rest of the page gives an example where axis angle form is useful that can
+help appreciating the difference between axis angles and Euler Angles.</p>
+<h2 id="box-1-a-simple-example-that-isnt-so-simple">Box 1: A simple example that isn&rsquo;t so simple</h2>
+<p>The real learning goal of this page is to get you to think about axis angle representations. To do that, we will use an example you have seen before: trying to understand what is going on in the first spinning cube demo in the previous Workbook.</p>
+<p>The code is in 
+    <a href="../../for_students/07-03-01.js" class="for_students">07-03-01.js</a> (
+    <a href="../../for_students/07-03-01.html" class="for_students">07-03-01.html</a>) (it&rsquo;s the same as the one on page 1 of the previous Workbook). The key lines are:</p>
+
+    
+    <div class="highlight"><div style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#00a8c8">function</span> <span style="color:#75af00">animate</span><span style="color:#111">(</span><span style="color:#75af00">timestamp</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#00a8c8">let</span> <span style="color:#75af00">timeDelta</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.002</span> <span style="color:#f92672">*</span> <span style="color:#111">(</span><span style="color:#75af00">lastTimestamp</span> <span style="color:#f92672">?</span> <span style="color:#75af00">timestamp</span> <span style="color:#f92672">-</span> <span style="color:#75af00">lastTimestamp</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75af00">lastTimestamp</span> <span style="color:#f92672">=</span> <span style="color:#75af00">timestamp</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75af00">cube</span><span style="color:#111">.</span><span style="color:#75af00">rotation</span><span style="color:#111">.</span><span style="color:#75af00">x</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> <span style="color:#75af00">timeDelta</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75af00">cube</span><span style="color:#111">.</span><span style="color:#75af00">rotation</span><span style="color:#111">.</span><span style="color:#75af00">y</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> <span style="color:#75af00">timeDelta</span><span style="color:#111">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75af00">renderer</span><span style="color:#111">.</span><span style="color:#75af00">render</span><span style="color:#111">(</span><span style="color:#75af00">scene</span><span style="color:#111">,</span> <span style="color:#75af00">camera</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#111">window</span><span style="color:#111">.</span><span style="color:#75af00">requestAnimationFrame</span><span style="color:#111">(</span><span style="color:#75af00">animate</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#111">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+<h3>07-03-01</h3><iframe
+    title=""
+    src="../../for_students/07-03-01.html"
+    js = "/for_students/07-03-01.js"
+    class="includebox includebox-standard"
+    width="100%"
+    height="100%"
+    scrolling="no"
+    frameborder="0"
+></iframe>
+
+<p>Notice that this animation loop causes a somewhat complicated motion - it goes left and right, even though it moves through a simple progression in Euler Angles (incrementing by <code>0.5*timeDelta</code> each frame) &hellip; THREE&rsquo;s built in Euler Angles are XYZ.</p>
+<p>What is going on here is that each time we change the X rotation, which changes the meaning of the Y rotation. So we don&rsquo;t get a simple motion as we might have expected.</p>
+<p>For the first Euler angles, that first step would be: <code>$ R_x(.01) \circ R_y(.01) $</code> (rotation about X followed by a rotation about Z). If we wanted to continue another step, we could repeat that, composing those same rotations again.
+<code>$$R_x(.01) \circ R_y(.01) \circ R_x(.01) \circ R_y(.01) \neq R_x(.01+.01) \circ R_y(.01 + .01)$$</code>
+The left side of that inequality would be uniform steps. The right side is what we did when we just added to the Euler Angles. Since you read <a href="../../docs/1/">Page &nbsp;1&nbsp; (Rotations in 3D)</a>, you were reminded that just because <code>$ R_x(\alpha) \circ R_x(\beta) = R_x(\alpha+\beta) $</code>, this doesn&rsquo;t work when there&rsquo;s a rotation about Y stuck in between.</p>
+<h2 id="box-2-a-simpler-rotation">Box 2: A Simpler Rotation</h2>
+<p>What if we wanted to keep rotating in the direction we started rotating in on that first step? We could on every frame apply the transformations. We could change the two angle additions to:</p>
+<div class="highlight"><div style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75af00">cube</span><span style="color:#111">.</span><span style="color:#75af00">rotateX</span><span style="color:#111">(</span><span style="color:#ae81ff">0.5</span><span style="color:#f92672">*</span><span style="color:#75af00">timeDelta</span><span style="color:#111">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#75af00">cube</span><span style="color:#111">.</span><span style="color:#75af00">rotateZ</span><span style="color:#111">(</span><span style="color:#ae81ff">0.5</span><span style="color:#f92672">*</span><span style="color:#75af00">timeDelta</span><span style="color:#111">);</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>But a thing to note is that this does not lead to a simple progression of the Euler Angles. In fact, after the second step, we would get a configuration that requires a bit of the Y rotation.</p>
+<p>We can think of this as follows: the sequence of rotations <code>$R_x(.01)$</code> and <code>$R_z(.01)$</code> is equivalent to a single rotation about some other axis. (The Axis is the vector (.712,-0.0178,.712) if you really want to know - but we&rsquo;ll explain how to figure that out in a moment).</p>
+<p>So, if we wanted to just keep spinning around that axis, we could instead write:</p>
+<div class="highlight"><pre tabindex="0" style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75af00">cube</span><span style="color:#111">.</span><span style="color:#75af00">rotateOnAxis</span><span style="color:#111">(</span><span style="color:#75af00">axis</span><span style="color:#111">,</span> <span style="color:#75af00">angle</span><span style="color:#111">);</span></span></span></code></pre></div>
+<p>where <code>axis</code> is the vector we figured out before, and angle is an amount to rotate about that axis.</p>
+<p>In the demo below, you can see these three different versions. For the Euler addition thing, you can see it wobbling all over the place. For the two rotation composition motions, you see the same consistent motion around an axis. We&rsquo;ve drawn the axis as a white line to make it clearer. We compute <code>axis</code> and <code>angle</code> to be the same step as the Euler increment. Over the course of many steps, you&rsquo;ll see they become a little bit different because of rounding errors.</p>
+<p>Try starting from zero and going a step at a time. On the first step, all three are the same. But after that, notice how on each step, the Euler incrementing version has a simple increment of the Euler Angles, but the axis angle representation changes (the axis changes on each frame). In contrast, the other two (which, as expected, have the same motion) keep the same axis and step around it uniformly.</p>
+<p>Now, you might wonder, given the Euler angles (like the step increment above) how do I convert it to axis angle? The good news is that THREE has a lot of code to help with doing these conversions. However, for this specific one, we first need to convert to a different form (called a <em>Quaternion</em>), because this is what THREE supports the best. In the code (file <code>for_students/07-03-02.js</code>), you can see a function called &ldquo;axisAngle&rdquo; that converts an Euler Angle to axis angle form. It will make sense after we talk about Quaternions on the next page.</p>
+<p>After playing with the incremental comparison toy (below and 
+    <a href="../../for_students/07-03-02.js" class="for_students">07-03-02.js</a> (
+    <a href="../../for_students/07-03-02.html" class="for_students">07-03-02.html</a>)), go on to <a href="../../docs/4/">Page &nbsp;4&nbsp; (Quaternions)</a> where we&rsquo;ll see how we extend axis angle representations into Unit Quaternions.</p>
+
+<h3>07-03-02</h3><iframe
+    title=""
+    src="../../for_students/07-03-02.html"
+    js = "/for_students/07-03-02.js"
+    class="includebox includebox-standard"
+    width="100%"
+    height="100%"
+    scrolling="no"
+    frameborder="0"
+></iframe>
+
+<p><a href="../../docs/4/" class="Next__Page">Next: Quaternions </a></p>
+
+            
+
+<div>
+        <i>There are no points associated with this page.</i>
+    </div>
+			
+			
+		</div>
+	</article>
+</main>
+
+                </div>
+                <div class="sidebar">
+<h2 class="Side_Title">Workbook 7: Transformation and Hierarchy in Three.js</h2>
+<p class="Side__Note">Pages:</p>
+<ul class="Side__List">
+    <li class="Side__Item Side__Unselected"><a href="../../">Index (Transformation and Hierarchy in THREE.JS)</a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/1/">1: Rotations in 3D </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/2/">2: Euler Angles Toys </a></li>
+        <li class="Side__Item Side__Selected"> 3: Axis Angle Representations </li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/4/">4: Quaternions </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/5/">5: Hierarchical Modeling in THREE </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/6/">6: Exercise 1: Quadcopter / Multi-Rotor </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/7/">7: The CS559 Framework Code (GraphicsTown) </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/8/">8: Exercise 2: Graphics Park </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/9/">9: Exercise 3: Construction Site </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/10/">10: Hand-in and Gallery </a></li>
+</ul>
+</div>
+</div>
+    </body>
+</html>

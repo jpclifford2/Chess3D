@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    
+<!-- CS559 Workbook Pages - page content &copy; 2021, Michael Gleicher -->
+<!-- This page is part of a Workbook developed for the 
+    CS559 Computer Graphics Class at the University of Wisconsin
+    https://graphics.cs.wisc.edu/Courses/559-sp2021/ -->
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../../css/workbook.css">
+        <script src="../../js/resizeIFrames.js"></script>    
+    
+    
+    <script type="text">
+        (function() {
+            var i, text, code, codes = document.getElementsByTagName('code');
+            for (i = 0; i &lt; codes.length;) {
+                code = codes[i];
+                if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+                text = code.textContent;
+                if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+                    text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+                    code.textContent = text;
+                }
+                if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+                    /^\$(.|\s)+\$$/.test(text) ||
+                    /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+                    code.outerHTML = code.innerHTML;  // remove <code></code>
+                    continue;
+                }
+                }
+                i++;
+            }
+            })();
+    </script>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            TeX: { equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"] }
+            }
+        });
+    </script>
+
+    </head>
+    <body>
+        <div class="container container--outer"><div class="maincolumn">
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header"><h1 class="post__title">Page 2: Euler Angles Toys</h1>
+		</header>
+        
+        
+        
+		<div class="content post__content clearfix"><p>This page has a series of demos I call the &ldquo;Euler Toys&rdquo; that are designed to help you build your intuitions about Euler Angles. Be sure to read things and play with the demos.</p>
+<h2 id="toy-1-euler-angles">Toy 1: Euler Angles</h2>
+<p>We use the term &ldquo;Euler Angles&rdquo; to refer to the representation of a 3D rotation as a sequence of 3 rotations about fixed axes. For example, we can represent a rotation in 3D as a sequence of 3 rotations: one about the X axis, one about the Y axis, and one about the Z axis. The important point is these axes are <strong>fixed:</strong> we decide them ahead of time. We have chosen X, Y then Z. Once we&rsquo;ve chosen them, we need to stick with these 3 axes in this order.</p>
+<p>This representation comes from a theorem that mathematician Leonhard Euler had: <em>any</em> rotation in 3D can be represented as a sequence of rotations about fixed axes. The theorem is very general: any set of axes can work (providing no two consecutive axes are parallel).</p>
+<p>Once we choose a convention (a set of axes and their order), we only need 3 numbers to represent an arbitrary 3D rotation: the amount of rotation around each axis.</p>
+<hr>
+<p>Here is a first demo to try out Euler Angles. With this demo, you can try out different combinations of axes, and change the angles for each.</p>
+<p>This demo lets you pick the <strong>order of rotations</strong> (there is a drop down at the bottom of the control panel - the default is &ldquo;XYZ&rdquo;). You can read that from left to right (as if it were programmed as 3 rotations). First apply an X rotation, then a Y rotation, then a Z rotation. The first rotation is in the &ldquo;global&rdquo; (world, Y up, X right, Z out from the screen) coordinate system.</p>
+<iframe
+    title="../EulerToys/et1"
+    src="../../for_students/../EulerToys/et1.html"
+    class="includebox includebox-standard"
+    width="100%"
+    height="100%"
+    scrolling="no"
+    frameborder="0"
+></iframe>
+<p>Try the following to make sure you understand:</p>
+<ol>
+<li>
+<p>See how you can rotate around any one axis, and what this means. Move one slider, see how the object rotates around that axis. Use the zero button to reset things before trying the next axis. <em>Make sure you understand what a rotation about each axis does.</em></p>
+</li>
+<li>
+<p>The key thing that makes Euler Angles tricky is that the different rotations interact. The first rotation changes the coordinate system (frame) that the next rotation takes place in, so we need to interpret each of the angles with respect to the others.</p>
+<p>Experiment with rotating about one axis and then another. For example, change X and then Y. Then reset (press the zero button) and see what happens if you change Y then X. Try to understand what happens as we apply a sequence of rotations.</p>
+<p>Assuming we&rsquo;re in the default (X,Y,Z) mode. This means that X is closest to the &ldquo;global&rdquo; frame and Z is closest to the object frame. Or if we were doing math we&rsquo;d have result = $R_x R_y R_z \textrm{point}$. (points go in on the right).</p>
+</li>
+<li>
+<p>Try this experiment Be sure to reset to zero before doing each step. And when I say 45 degrees, it doesn&rsquo;t have to be exact.</p>
+<ol>
+<li>
+<p>Move Y - notice that this is a rotation about both the global Y (up vector) and object Y (green). With X and Z being 0, nothing has changed what the Y axis is.</p>
+</li>
+<li>
+<p>Move X (to say, 45 degrees). Notice how the object&rsquo;s Y axis now points towards us. If you change the Y Slider, notice how things rotate around the object&rsquo;s Y axis (since Z is 0, the object&rsquo;s Y axis is the same as the &ldquo;local&rdquo; Y axis when we do the Y rotation).</p>
+</li>
+<li>
+<p>Move Z (to say, 45 degrees). Notice how the object&rsquo;s Y axis now points to the left. If you move the Y slider notice that the object rotates around vertical (the global Y axis). When we do the Ry rotation, the local Y axis is aligned with the global Y axis. The Rz rotation (that makes the object&rsquo;s axis point leftward) hasn&rsquo;t happened yet (since Ry happens before Rz).</p>
+</li>
+<li>
+<p>Now, set both X and Z to some positive value (say 45 degrees). Move Y. Notice how the object doesn&rsquo;t rotate around either the global (vertical) or object (green) axis. The local Y axis (at the time we do Ry) has been moved from the global (by Rx). The object Y axis (with the green) will not be the local Y (at the time we do Ry) since Rz will change it.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Try different orders of Euler Angles. Try ZYX (opposite order of XYZ). Make sure you see how this is different. The first rotation is applied first.</p>
+<p>The &ldquo;ZXZ&rdquo; choice is not a mistake: this is a valid set of Euler Angles.
+As long as each consecutive axis is different from the previous one, Euler angles can represent all possible rotations. ZXZ is a common choice in physics.</p>
+</li>
+</ol>
+<h2 id="toy-2---two-sets-of-euler-angles">Toy 2 - Two Sets of Euler Angles</h2>
+<p>In this next demo, we apply two sets of Euler Angles to one object. So, you can try out $R_{x1} R_{y1} R_{z1} R_{x2} R_{y2} R_{z2}$ and see how rotations combine. For example, is $R_{x1}(30^{\circ})R_{y1}(90^{\circ})R_{x2}(40^{\circ}) = R_{x1}(70^{\circ})R_{y1}(90^{\circ})$?</p>
+<iframe
+    title="../EulerToys/et2"
+    src="../../for_students/../EulerToys/et2.html"
+    class="includebox includebox-standard"
+    width="100%"
+    height="100%"
+    scrolling="no"
+    frameborder="0"
+></iframe>
+<h2 id="toy-3---some-problems">Toy 3 - Some problems</h2>
+<p>With Euler Angles, different orders do different things.</p>
+<iframe
+    title="../EulerToys/et3"
+    src="../../for_students/../EulerToys/et3.html"
+    class="includebox includebox-standard"
+    width="100%"
+    height="100%"
+    scrolling="no"
+    frameborder="0"
+></iframe>
+<p>To try this out, set object #2 to ZYX (with object #1 as XYZ). Notice how they do different things. Start with just changing X and Y of each. See how the rotations &ldquo;closer to the object&rdquo; are object axes, while rotations &ldquo;closer to the world&rdquo; are world axes.</p>
+<p>Another problem is <strong>gimbal lock</strong>.</p>
+<p>In some circumstances, you can get into a configuration where there are only two possible directions to rotate (you can cause a particular change to happen). This is called <strong>gimbal lock.</strong> For XYZ Euler angles this occurs when the rotation about the Y axis is 90 degrees, causing the X axis to align with the Z axis (and perform the same motion).</p>
+<p>To see gimbal lock in the demo, press the &ldquo;Gimball Lock&rdquo; button which will set Y to 90 degrees. Notice how X and Z do the same thing.</p>
+<p>When Y is 90 degrees, there is no way to cause a rotation around the world-space Z axis! There are only 2 directions you can go (rotate around world space X, or rotate around world space Y). If you need to go in the third direction, you need to first make a change in one of the other directions.</p>
+<h2 id="toy-4---interpolations">Toy 4 - Interpolations</h2>
+<p>Different sets of angles may represent the same rotation. That means that interpolating between two close things might lead to weird paths, or that comparing sets of angles is hard. This next demo lets you play with this concept. The middle object interpolates linearly from Euler Angles 1 to Euler Angles 2 (this only works when the order of the angles is the same).</p>
+<iframe
+    title="../EulerToys/et4"
+    src="../../for_students/../EulerToys/et4.html"
+    class="includebox includebox-standard"
+    width="100%"
+    height="100%"
+    scrolling="no"
+    frameborder="0"
+></iframe>
+<p>To see an example of bad interpolation, press the &ldquo;Bad Interp&rdquo; Button. You&rsquo;ll see that the rotations are the same (the objects are in the same configuration), but the numbers are very different. If you interpolate between the two configurations that should be &ldquo;the same&rdquo;, you get a weird rotation.</p>
+<h2 id="summary">Summary</h2>
+<p>We recommend that you spend some time playing with the Euler Angle toys  to build up your intuitions about how Euler Angles work, and the problems they have.</p>
+<p>Then you can move on to <a href="../../docs/3/">Page &nbsp;3&nbsp; (Axis Angle Representations)</a> to consider some alternatives.</p>
+
+            
+
+<div>
+        <i>There are no points associated with this page.</i>
+    </div>
+			
+			
+		</div>
+	</article>
+</main>
+
+                </div>
+                <div class="sidebar">
+<h2 class="Side_Title">Workbook 7: Transformation and Hierarchy in Three.js</h2>
+<p class="Side__Note">Pages:</p>
+<ul class="Side__List">
+    <li class="Side__Item Side__Unselected"><a href="../../">Index (Transformation and Hierarchy in THREE.JS)</a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/1/">1: Rotations in 3D </a></li>
+        <li class="Side__Item Side__Selected"> 2: Euler Angles Toys </li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/3/">3: Axis Angle Representations </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/4/">4: Quaternions </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/5/">5: Hierarchical Modeling in THREE </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/6/">6: Exercise 1: Quadcopter / Multi-Rotor </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/7/">7: The CS559 Framework Code (GraphicsTown) </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/8/">8: Exercise 2: Graphics Park </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/9/">9: Exercise 3: Construction Site </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/10/">10: Hand-in and Gallery </a></li>
+</ul>
+</div>
+</div>
+    </body>
+</html>

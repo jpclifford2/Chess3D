@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    
+<!-- CS559 Workbook Pages - page content &copy; 2021, Michael Gleicher -->
+<!-- This page is part of a Workbook developed for the 
+    CS559 Computer Graphics Class at the University of Wisconsin
+    https://graphics.cs.wisc.edu/Courses/559-sp2021/ -->
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../../css/workbook.css">
+        <script src="../../js/resizeIFrames.js"></script>    
+    
+    
+    <script type="text">
+        (function() {
+            var i, text, code, codes = document.getElementsByTagName('code');
+            for (i = 0; i &lt; codes.length;) {
+                code = codes[i];
+                if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+                text = code.textContent;
+                if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+                    text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+                    code.textContent = text;
+                }
+                if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+                    /^\$(.|\s)+\$$/.test(text) ||
+                    /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+                    code.outerHTML = code.innerHTML;  // remove <code></code>
+                    continue;
+                }
+                }
+                i++;
+            }
+            })();
+    </script>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            displayMath: [['$$','$$'], ['\\[','\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            TeX: { equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"] }
+            }
+        });
+    </script>
+
+    </head>
+    <body>
+        <div class="container container--outer"><div class="maincolumn">
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header"><h1 class="post__title">Page 1: Rotations in 3D</h1>
+		</header>
+        
+        
+        
+		<div class="content post__content clearfix"><h2 id="topics-in-rotations">Topics in Rotations</h2>
+<p>We will discuss rotations in lectures. Here is a summary of the key topics to know:</p>
+<ol>
+<li>Rotations around a single axis. Why is the 2D case easier, and how does that apply in 3D?</li>
+<li>The basic challenges of rotation in 3D. <strong>Why does it get so tricky?</strong></li>
+<li>The main types of 3D rotation representations: Euler Angles, Axis-Angle, Quaternions, and Rotation Matrices. You do <strong>not</strong> need to know the details of each, but you should have the intuitions for each, and what they are good and bad at.</li>
+<li>An understanding of Euler Angles. How we use 3 rotations about fixed axes (often X,Y,Z) to represent arbitrary rotations. You should have a sense of the <strong>challenges</strong> of using this representation (gimbal lock, unintuitive interpretations, weird interpolations, &hellip;)</li>
+<li>An understanding of Axis Angle representations. How we use a vector and an angle together to represent an arbitrary rotation.</li>
+<li>The basic ideas of using Quaternions for representing rotations. You don&rsquo;t need to know the details of how they work. You should have an intuition for why we <strong>like</strong> them so much.</li>
+<li>The properties of rotation matrices, and why they aren&rsquo;t necessarily a good way to compute with rotations.</li>
+</ol>
+<p>We&rsquo;ll review some of the key points over the next 3 pages.</p>
+<h2 id="rotations-about-one-or-more-axes">Rotations about one or more axes</h2>
+<p>Rotations are rigid transformations (the distances between points are preserved, and handedness is preserved as well) that keep the zero position constant.</p>
+<p><strong>All rotations have an axis.</strong> There is a line through space (that goes through the origin) for which points on the line do not move (are not changed by the transformation). The space &ldquo;spins around&rdquo; this <strong>axis of rotation.</strong></p>
+<p>The composition of any sequence of rotations is a rotation. Put simply, if you rotate an object, rotate it again, then rotate it a third time, there will always be one rotation that gets you from the initial state to the final state. No matter how many rotations you put together.</p>
+<p>In a single axis (like in 2D):
+<code>$ R_z(\alpha) \circ R_z(\beta) = R_z(\alpha+\beta) $</code>.
+That is, the composition of rotations is the same as adding the angles. We can simply measure the amount of rotation about that axis.</p>
+<p>With different axes, this does not hold!
+<code>$ R_x(\alpha) \circ R_y(\beta) = ?$</code>
+And things in between cause problems:
+<code>$ R_x(\alpha) \circ R_y(\beta) \circ R_x(\gamma) \neq R_x(\alpha+\gamma) R_y(\beta) $</code></p>
+<h2 id="summary-rotations-in-3d">Summary: Rotations in 3D</h2>
+<p>That was a brief reminder of some of the points in lectures and the readings. The next pages will let you experiment with the demonstrations that have been developed for class. First, we&rsquo;ll look at Euler Angles on <a href="../../docs/2/">Page &nbsp;2&nbsp; (Euler Angles Toys)</a>.</p>
+
+            
+
+<div>
+        <i>There are no points associated with this page.</i>
+    </div>
+			
+			
+		</div>
+	</article>
+</main>
+
+                </div>
+                <div class="sidebar">
+<h2 class="Side_Title">Workbook 7: Transformation and Hierarchy in Three.js</h2>
+<p class="Side__Note">Pages:</p>
+<ul class="Side__List">
+    <li class="Side__Item Side__Unselected"><a href="../../">Index (Transformation and Hierarchy in THREE.JS)</a></li>
+        <li class="Side__Item Side__Selected"> 1: Rotations in 3D </li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/2/">2: Euler Angles Toys </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/3/">3: Axis Angle Representations </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/4/">4: Quaternions </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/5/">5: Hierarchical Modeling in THREE </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/6/">6: Exercise 1: Quadcopter / Multi-Rotor </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/7/">7: The CS559 Framework Code (GraphicsTown) </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/8/">8: Exercise 2: Graphics Park </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/9/">9: Exercise 3: Construction Site </a></li>
+        <li class="Side__Item Side__Unselected"> <a href="../../docs/10/">10: Hand-in and Gallery </a></li>
+</ul>
+</div>
+</div>
+    </body>
+</html>
